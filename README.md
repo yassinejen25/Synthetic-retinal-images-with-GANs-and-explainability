@@ -67,6 +67,16 @@ Run the notebooks in order:
 4. **GAN and augmentation** - trains the conditional GAN on the train split, generates synthetic images for grades 1, 3 and 4 (up to about 600 train images per grade), and compares real-only against real + synthetic classifiers over 3 seeds.
 
 Fix the random seed (`42` for the split) and reuse the same `splits.csv` for every experiment.
+## Original data distribution and preprocessing results 
+
+The code takes a raw fundus photo and turns it into a clean, fixed-size, lighting-normalized image. Applies **Ben Graham normalization** (the Kaggle DR competition winner's trick) used to standardize lighting and boost local contrast/texture.
+
+### Class distribution
+![Class distribution](images/class_distribution.png)
+
+### Image preprocessing results
+![Real vs synthetic images](images/real_vs_synthetic.png)
+
 
 ## Results
 
@@ -91,9 +101,17 @@ Per-grade test sensitivity: 0.988 / 0.755 / 0.627 / 0.448 / 0.579 for grades 0-4
 | Sensitivity, grade 3 | 0.517 ± 0.034 | 0.345 ± 0.069 | -0.172 |
 | Sensitivity, grade 4 | 0.421 ± 0.046 | 0.368 ± 0.070 | -0.053 |
 
+### Image augmentation results
+
+This figure presents the image augmentation results 
+![Augmentation](images/Augmentation.png)
+
+
 (The 128x128 real-only row is the fair comparison for the augmented run; it differs from the 256x256 baseline above.)
 
 **Interpretation.** In this configuration, synthetic augmentation did **not** improve the augmented grades: sensitivity for grades 1, 3 and 4 decreased, and QWK did not improve. The rise in overall accuracy comes mostly from grade 2 (not augmented) being predicted more often, so it should not be read as a success. The test set is small (about 29 grade-3 and 38 grade-4 images), so individual differences carry wide uncertainty.
+
+
 
 ### Limitations and likely causes
 
@@ -113,13 +131,6 @@ Per-grade test sensitivity: 0.988 / 0.755 / 0.627 / 0.448 / 0.579 for grades 0-4
 - [ ] Explainability: Grad-CAM / Integrated Gradients on real vs. synthetic images, latent-space traversal, lesion-overlap analysis against IDRiD annotations
 - [ ] Bootstrap confidence intervals on test metrics
 
-## Sample Figures
-
-Add your own figures to `images/` and link them here, for example:
-
-![Class distribution](images/class_distribution.png)
-
-![Real vs synthetic images](images/real_vs_synthetic.png)
 
 ## Ethics and Disclaimer
 
